@@ -5,6 +5,7 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -43,8 +44,14 @@ public class CallBackProducer {
 
         KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
 
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
         for (int i = 0;i<10;i++){
-            producer.send(new ProducerRecord<String, String>("aaa", "kafka-demo2---" + i), new Callback() {
+            producer.send(new ProducerRecord<String, String>("aaa", "test","kafka-demo2---" + i), new Callback() {
+                @Override
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {
                     if (e == null){
                         System.out.println(recordMetadata.partition()+"----"+recordMetadata.offset());
